@@ -1,28 +1,53 @@
-import                     "./style.css";
-
-console.error("Set up and install linter and prettier!");
-
+import "./style.css";
+import { createDay } from "./modules/weather";
+import { displayMainInfo } from "./modules/displayData";
+import { requestWeather } from "./modules/apiCall";
 /* 
 Start here
 */
 // Not best practice; but I don't quite have backend knowledge yet and this key is free
-const apiKey = "84JZF938TKUQX74B2ZSLA2WET";
-var location = "London,UK";
-var units = "metric"; // metric, US, UK
-var reqData = "datetimeEpoch%2Cname%2CresolvedAddress%2Ctempmax%2Ctempmin%2Cfeelslike%2Chumidity%2Cprecipprob%2Cwindspeed%2Cuvindex%2Cdescription%2Cicon"; // specifys data to request
-var request = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?unitGroup=${units}&elements=${reqData}&key=${apiKey}&contentType=json"; // dont concat dumbas use ${ var-name }
 
-// Build query: https://www.visualcrossing.com/weather/weather-data-services
 
+// Store objects of forecast here
 var forecast = [];
 
-// fetch weather data - MAKE THIS ON SUBMIT OF SEARCH BAR
-fetch(request, {
-  mode: "cors",
-})
-  .then((weather) => {
-    console.log("weather is ", weather.json()); // keep in mind it returns string from server so we must parse as json again
-  })
-  .catch(() => {
-    console.error("Could not load weather API");
-  });
+//
+
+//.then(weather => populateForecast(weather));
+
+
+const customizeWeatherRequest = async() => {
+    requestWeather()
+    .then(weather => {
+
+        populateForecast(weather);
+
+        const address = weather.resolvedAddress;
+        const desc = weather.description;
+        const today = forecast[0];
+
+        
+        displayMainInfo(address, desc, today);
+    });
+
+
+    // populateForecast(weather);
+    // displayMainInfo();
+}
+
+// take the array of the next 7 days and convert them to an Object and store in array
+const populateForecast = (weather) => {
+    console.log("populate weather", weather);
+    weather.days.forEach((day) => {
+        console.log("The day, ", day);
+        const dayObj = createDay(day.feelslike, day.humidity, day.precipprob, day.uvindex, day.windspeed, day.datetimeEpoch, day.icon, day.hours);
+        forecast.push(dayObj);
+    });
+}
+
+// On init, use default values to show
+customizeWeatherRequest();
+
+//Get necessary info of location
+// displayMainInfo(weather, forecast[0]);
+   
