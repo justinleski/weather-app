@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
 :root {
-    --font-main: ;
+    --font-main: "Red Hat Display", Arial, Helvetica, sans-serif;
+    --font-secondary: "Nanum Gothic", Verdana, Geneva, Tahoma, sans-serif;
 }
 *, *::before, *::after {
 	box-sizing: border-box;
@@ -35,6 +39,9 @@ p, h1, h2, h3, h4, h5, h6 {
     width: 1280px;
     height: 100vh;
 }
+.wrapper > * {
+    width: 100%;
+}
 main {
     display: flex;
     flex-direction: column;
@@ -43,25 +50,90 @@ main {
 }
 header {
     display: flex;
-    max-height: max(10vh, 300px);
+    max-height: max(1vh, 100px);
     background-color: aqua;
     padding: max(1%, 16px);
     justify-content: space-between;
+    align-items: center;
 }
-input, #search{
-    width: 100%;
-}
+/*Extra info grid display*/
 section {
     display: grid;
     width: 100%;
     height: auto;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    grid-template-rows: 2fr 1fr 1fr;
+    gap: 8px;
 }
 section > * {
     border-radius: 1rem;
     gap: 16px;
     border: 0;
 }
-temp {
-    font-family: Arial, Helvetica, sans-serif;
-    
+.hourlyForecast {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+.windSpeed {
+    grid-column: 1;
+    grid-row: 2;
+}
+.humidity {
+    grid-column: 2;
+    grid-row: 2;
+}
+.uvIndex {
+    grid-column: 1;
+    grid-row: 3;
+}
+.rainChance {
+    grid-column: 2;
+    grid-row: 3;
+}
+span {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+}
+/*end grid*/
+.temp {
+    font-family: var(--font-main);
+    font-weight: 600;
+}
+.currentWeather {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-family: var(--font-main);
+}
+.currentWeather * {
+    text-align: center;
+}
+input {
+    border-radius: 1rem;
+    border: 0;
+    outline: none;
+}
+input, #search{
+    width: 100%;
+    height: inherit;
+}
+.searchBar {
+    height: clamp(25px, 5%, 1vh);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    background: rgb(188,187,254);
+    background: linear-gradient(0deg, rgba(188,187,254,1) 42%, rgba(182,240,244,1) 100%);
+    border-radius: 1.5rem;
+    text-overflow: ellipsis;
+}
+.searchBar > * {
+    background-color: transparent;
+    font-family: var(--font-secondary);
+    font-weight: 400;
+}
+#currTemp {
+    font-size: 6rem;
+    font-weight: 700;
 }
