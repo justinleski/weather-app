@@ -9,7 +9,7 @@ export const displayMainInfo = (currLoc, currDesc, today) => {
     const currHour = getCurrentHour();
 
     // Manipulate DOM to reflect weather objects
-    changeWeather(temp, today.hours[currHour]);
+    changeWeather(temp, today.hourlyForecast[currHour].feelslike);
     changeLocation(location, currLoc);
     changeDesc(desc, currDesc);
 
