@@ -1,6 +1,6 @@
 import "./style.css";
 import { createDay } from "./modules/weather";
-import { displayMainInfo, displayTodayExtra } from "./modules/displayData";
+import { displayMainInfo, displayTodayExtra, createHourlyForecast, createWeeklyForecast } from "./modules/displayData";
 import { requestWeather } from "./modules/apiCall";
 /* 
 Start here
@@ -28,6 +28,8 @@ const customizeWeatherRequest = async(forecast) => {
 
         displayMainInfo(address, desc, today);
         displayTodayExtra(today);
+        createHourlyForecast(today);
+        createWeeklyForecast(forecast);
     } catch (error) {
         console.error("Could not load weather data:", error);
     }
@@ -41,7 +43,7 @@ const populateForecast = async(weather) => {
 
     weather.days.forEach((day) => {
         console.log("The day, ", day);
-        const dayObj = createDay(day.feelslike, day.humidity, day.precipprob, day.uvindex, day.windspeed, day.datetimeEpoch, day.icon, day.hours);
+        const dayObj = createDay(day.feelslike, day.humidity, day.precipprob, day.uvindex, day.windspeed, day.datetimeEpoch, day.icon, day.hours, day.tempmax, day.tempmin);
         weatherArray.push(dayObj);
     });
     

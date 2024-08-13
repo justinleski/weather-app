@@ -1,6 +1,8 @@
 class Day {
-    constructor(temp, humid, precip, uv, wind, time, icon, hourlyForecast){
+    constructor(temp, humid, precip, uv, wind, time, icon, hourlyForecast, tempmax, tempmin){
         //this.address = address; 
+        this.tempmax = tempmax;
+        this.tempmin = tempmin;
         this.temp = temp;
         this.humid = humid; 
         this.precip = precip;
@@ -12,8 +14,8 @@ class Day {
     }
 }
 
-export const createDay = (temp, humid, precip, uv, wind, time, icon, hourlyForecast) => {
-    const day = new Day(temp, humid, precip, uv, wind, time, icon, hourlyForecast);
+export const createDay = (temp, humid, precip, uv, wind, time, icon, hourlyForecast, tempmax, tempmin) => {
+    const day = new Day(temp, humid, precip, uv, wind, time, icon, hourlyForecast, tempmax, tempmin);
     return day;
 }
 
