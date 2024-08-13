@@ -6,10 +6,6 @@ export const changeWeather = (element, temp) => {
     element.textContent = temp+"°";
 }
 
-export const changeLocation = (element, location) => {
-    element.textContent = location;
-}
-
-export const changeDesc = (element, desc) => {
-    element.textContent = desc;
+export const updateElement = (element, text) => {
+    element.textContent = text;
 }

@@ -60,15 +60,24 @@ header {
 section {
     display: grid;
     width: 100%;
-    height: auto;
+    height: 70vh;
+    flex-grow: 1;
     grid-template-columns: 1fr 1fr 1.2fr;
-    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1.25fr 1.25fr;
     gap: 8px;
+    
 }
 section > * {
     border-radius: 1rem;
     gap: 16px;
     border: 0;
+
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.31);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 .hourlyForecast {
     grid-column: 1 / span 2;
@@ -136,4 +145,21 @@ input, #search{
 #currTemp {
     font-size: 6rem;
     font-weight: 700;
+}
+#currLoc {
+    font-size: 2rem;
+}
+#currDesc {
+    font-size: 1rem;
+}
+.extra {
+    font-family: var(--font-secondary);
+    padding: 1rem;
+    font-size: 4rem;
+    font-weight: 600;
+}
+.extra h3 {
+    font-size: 1rem;
+    font-family: var(--font-main);
+    font-weight: 400;
 }

@@ -1,6 +1,6 @@
 import "./style.css";
 import { createDay } from "./modules/weather";
-import { displayMainInfo } from "./modules/displayData";
+import { displayMainInfo, displayTodayExtra } from "./modules/displayData";
 import { requestWeather } from "./modules/apiCall";
 /* 
 Start here
@@ -10,10 +10,6 @@ Start here
 
 // Store objects of forecast here
 var forecast = [];
-
-//
-
-//.then(weather => populateForecast(weather));
 
 
 const customizeWeatherRequest = async(forecast) => {
@@ -31,27 +27,10 @@ const customizeWeatherRequest = async(forecast) => {
         const today = forecast[0];
 
         displayMainInfo(address, desc, today);
+        displayTodayExtra(today);
     } catch (error) {
         console.error("Could not load weather data:", error);
     }
-
-    // requestWeather()
-    // .then(weather => {
-
-    //     console.log("weather is in customize", weather);
-
-    //     populateForecast(weather);
-    //     console.log("forecast is ", forecast);
-
-    //     const address = weather.resolvedAddress;
-    //     const desc = weather.description;
-    //     const today = forecast[0];
-
-        
-    //     displayMainInfo(address, desc, today);
-    // });
-
-
 
 }
 
@@ -68,6 +47,13 @@ const populateForecast = async(weather) => {
     
     return weatherArray;
 }
+
+// Add event listenr to search bar for when Enter is pressed on the keyboard to query the results
+document.querySelector("#search").addEventListener("keydown", (e) => {
+    if (e.key === "Enter"){
+        console.log("searched");
+    }
+});
 
 // On init, use default values to show
 customizeWeatherRequest(forecast);
