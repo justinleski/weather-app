@@ -12,10 +12,10 @@ Start here
 var forecast = [];
 
 
-const customizeWeatherRequest = async(forecast) => {
+const customizeWeatherRequest = async(forecast, searchQuery) => {
 
     try {
-        const weather = await requestWeather(); // Wait for the weather data to be fetched
+        const weather = await requestWeather(searchQuery); // Wait for the weather data to be fetched
 
         console.log("weather is in customize", weather);
 
@@ -52,15 +52,15 @@ const populateForecast = async(weather) => {
 }
 
 // Add event listenr to search bar for when Enter is pressed on the keyboard to query the results
-document.querySelector("#search").addEventListener("keydown", (e) => {
+const searchBar = document.querySelector("#search");
+searchBar.addEventListener("keydown", (e) => {
     if (e.key === "Enter"){
-        console.log("searched");
+        const searchQuery = document.querySelector("#search").value;
+        customizeWeatherRequest(forecast, searchQuery);
     }
 });
 
-// On init, use default values to show
-customizeWeatherRequest(forecast);
+searchBar.addEventListener("focus", () => searchBar.select())
 
-//Get necessary info of location
-// displayMainInfo(weather, forecast[0]);
-   
+// On init, use default values to show
+customizeWeatherRequest(forecast, "London, England");

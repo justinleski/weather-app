@@ -17,3 +17,7 @@ export const updateWeeklyForecast = (card) => {
     const forecast = document.querySelector("span");
     forecast.appendChild(card);
 }
+
+export const clearContent = (content) => {
+    content.replaceChildren();
+}

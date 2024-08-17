@@ -1,4 +1,4 @@
-import { changeWeather, updateElement, updateHourlyForecast, updateWeeklyForecast } from "./domManipulator";
+import { changeWeather, updateElement, updateHourlyForecast, updateWeeklyForecast, clearContent } from "./domManipulator";
 
 export const displayMainInfo = (currLoc, currDesc, today) => {
     const location = document.querySelector("#currLoc");
@@ -30,6 +30,10 @@ export const displayTodayExtra = (today) => {
 }
 
 export const createHourlyForecast = (today) => {
+
+    const hourly = document.querySelector("#hourlyForecast");
+    clearContent(hourly);
+
     var days = today.hourlyForecast;
 
     // time
@@ -59,6 +63,10 @@ export const createHourlyForecast = (today) => {
 }
 
 export const createWeeklyForecast = (forecast) => {
+
+    const weekly = document.querySelector("span");
+    clearContent(weekly);
+
     // For each seven days; create a card which is then pushed to the container
     forecast.forEach(day => {
         const card = document.createElement("div"); 

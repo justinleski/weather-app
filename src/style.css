@@ -197,8 +197,8 @@ input, #search{
     text-shadow: 2px 2px 16px rgb(52, 51, 51);
 }
 .weatherIcon {
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
 }
 
 
