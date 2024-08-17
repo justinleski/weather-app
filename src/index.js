@@ -1,6 +1,6 @@
 import "./style.css";
 import { createDay } from "./modules/weather";
-import { displayMainInfo, displayTodayExtra, createHourlyForecast, createWeeklyForecast } from "./modules/displayData";
+import { displayMainInfo, displayTodayExtra, createHourlyForecast, createWeeklyForecast, changeBackground } from "./modules/displayData";
 import { requestWeather } from "./modules/apiCall";
 /* 
 Start here
@@ -30,6 +30,7 @@ const customizeWeatherRequest = async(forecast) => {
         displayTodayExtra(today);
         createHourlyForecast(today);
         createWeeklyForecast(forecast);
+        changeBackground(today);
     } catch (error) {
         console.error("Could not load weather data:", error);
     }

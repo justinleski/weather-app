@@ -43,8 +43,9 @@ export const createHourlyForecast = (today) => {
         const time = document.createElement("p");
         time.textContent = i;
 
-        const icon = document.createElement("p");
-        icon.textContent = days[i].icon;
+        const iconName = days[i].icon;
+        const icon = document.createElement("img");
+        icon.src = `../../assets/icons/${iconName}.svg`;
 
         const temp = document.createElement("p");
         temp.textContent = days[i].feelslike;
@@ -60,15 +61,17 @@ export const createHourlyForecast = (today) => {
 export const createWeeklyForecast = (forecast) => {
     // For each seven days; create a card which is then pushed to the container
     forecast.forEach(day => {
-        const card = document.createElement("div"); // TODO FUINISH
+        const card = document.createElement("div"); 
         const icons = document.createElement("div");
         const weather = document.createElement("div");
 
         //card
-        const img = document.createElement("p");
-        img.textContent = day.icon;
+        const iconName = day.icon;
+        const icon = document.createElement("img");
+        icon.src = `../../assets/icons/${iconName}.svg`;
         console.error("Display rain chance if forecast rpedicts");
-        icons.appendChild(img);
+        icon.classList.add("weatherIcon");
+        icons.appendChild(icon);
 
         // parse date
 
@@ -90,6 +93,37 @@ export const createWeeklyForecast = (forecast) => {
         updateWeeklyForecast(card);
     })
 }
+
+export const changeBackground = (today) => {
+    const body = document.querySelector("body");
+
+    // Get current hour's weather
+    const currHour = getCurrentHour();
+    const bgName = today.hourlyForecast[currHour].icon;
+
+    // If the main text is not too readable on bg, change colour
+    // const currentWeatherCard = document.querySelector(".currentWeather > *");
+    // currentWeatherCard
+
+    // switch (bgName) {
+    //     case "partly-cloudy-night":
+    //     case "clear-night":
+    //         changeTextWhite(currentWeatherCard);
+    //         break;
+    //     default:
+    //         currentWeatherCard.classList.remove("whiteShadow");
+    //         break;
+    // }
+
+    body.style.backgroundImage = `url(../../assets/images/${bgName}.jpg)`;
+    body.style.backgroundPosition = "center";
+}
+
+// const changeTextWhite = (parentElement) => {
+//     parentElement.forEach(child => {
+//         child.classList.add("whiteShadow")
+//     });
+// }
 
 const getCurrentHour = () => {
     const now = new Date();
