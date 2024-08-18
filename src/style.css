@@ -59,7 +59,7 @@ header {
 section {
     display: grid;
     width: 100%;
-    height: 70vh;
+    height: 65vh;
     flex-grow: 1;
     grid-template-columns: 1fr 1fr 1.2fr;
     grid-template-rows: 1fr 1.25fr 1.25fr;
@@ -71,11 +71,14 @@ section > * {
     border: 0;
 
     /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.31);
+    background: rgba(41, 38, 38, 0.31);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+
+    color: var(--main-font-color);
+    text-shadow: 2px 2px 16px rgb(52, 51, 51);
 }
 #hourlyForecast {
     grid-column: 1 / span 2;
@@ -121,6 +124,7 @@ input {
     border-radius: 1rem;
     border: 0;
     outline: none;
+    padding-left: 16px;
 }
 input, #search{
     width: 100%;
@@ -137,16 +141,19 @@ input, #search{
     text-overflow: ellipsis;
 
     /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.31);
+    background: rgba(41, 38, 38, 0.31);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+
 }
 .searchBar > * {
     background-color: transparent;
     font-family: var(--font-secondary);
     font-weight: 400;
+    color: var(--main-font-color);
+    text-shadow: 2px 2px 16px rgb(52, 51, 51);
 }
 #currTemp {
     font-size: 6rem;
@@ -166,7 +173,7 @@ input, #search{
     font-weight: 600;
 }
 .extra h3 {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-family: var(--font-main);
     font-weight: 400;
 }
@@ -176,10 +183,10 @@ input, #search{
     gap: 8px;
 }
 .hourlyForecastCard {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 32px;
     padding: 4px;
 }
 .hourlyForecastCard > *, .weeklyForecastCard > * {
@@ -190,7 +197,16 @@ input, #search{
 .weeklyForecastCard {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.weeklyForecastCard p {
+    font-weight: 700;
+}
+span .weeklyForecastCard:not(:last-child) {
+    box-shadow: 0px 24px 3px -24px rgba(15, 15, 15, 0.301);
 }
 .whiteShadow {
     color: var(--main-font-color);
@@ -200,7 +216,25 @@ input, #search{
     width: 64px;
     height: 64px;
 }
-
+.precip {
+    color: blue;
+    font-weight: 800;
+    position: absolute;
+    bottom: 0;                /* Align to the bottom */
+    left: 50%;                /* Move to the center horizontally */
+    transform: translateX(-50%); /* Adjust position to center */
+}
+.invert {
+    filter: invert(100%);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+}
 
 
 /*Put all of grid in single column on small devices*/
@@ -223,6 +257,19 @@ input, #search{
         span {
             grid-column: 1 / span 2;
             grid-row: 4;
+        }
+        .extra {
+            font-size: 3rem;
+        }
+        .hourlyForecastCard {
+            font-size: 0.5rem;
+        }
+        #currDesc {
+            font-size: 0.75rem;
+        }
+        .weeklyForecastCard{
+            padding-left: 8px;
+            padding-right: 8px;
         }
     }
   }

@@ -21,3 +21,16 @@ export const updateWeeklyForecast = (card) => {
 export const clearContent = (content) => {
     content.replaceChildren();
 }
+
+// export const showRainChance = (card, chance) => {
+//     card.style.display = "flex";
+//     card.style.flexDirection = "column";
+    
+
+//     const precipProb = document.createElement("p");
+//     precipProb.textContent = chance+"%";
+//     precipProb.classList.add("precip");
+
+
+//     card.appendChild(precipProb);
+// }
