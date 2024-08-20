@@ -28,7 +28,8 @@ const customizeWeatherRequest = async(forecast, searchQuery) => {
 
         displayMainInfo(address, desc, today);
         displayTodayExtra(today);
-        createHourlyForecast(today);
+        createHourlyForecast(today, forecast[1]); // TODO: FIX; somehow fucking everything up
+
         createWeeklyForecast(forecast);
         changeBackground(today);
     } catch (error) {

@@ -30,12 +30,12 @@ export const displayTodayExtra = (today) => {
     updateElement(rain, today.precip + ("%"));
 }
 
-export const createHourlyForecast = (today) => {
+export const createHourlyForecast = (today, tomorrow) => {
 
     const hourly = document.querySelector("#hourlyForecast");
     clearContent(hourly);
 
-    var days = today.hourlyForecast;
+    var days = today.hourlyForecast.concat(tomorrow.hourlyForecast);
 
     // time
     const currHour = getCurrentHour();
