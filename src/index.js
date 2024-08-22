@@ -16,19 +16,16 @@ const customizeWeatherRequest = async(forecast, searchQuery) => {
 
     try {
         const weather = await requestWeather(searchQuery); // Wait for the weather data to be fetched
-
-        console.log("weather is in customize", weather);
-
         forecast = await populateForecast(weather); // Ensure populateForecast returns something if needed
-        console.log("forecast is ", forecast);
 
         const address = weather.resolvedAddress;
         const desc = weather.description;
         const today = forecast[0];
+        var timezone = weather.timezone;
 
         displayMainInfo(address, desc, today);
         displayTodayExtra(today);
-        createHourlyForecast(today, forecast[1]); // TODO: FIX; somehow fucking everything up
+        createHourlyForecast(today, forecast[1], timezone); // TODO: FIX; somehow fucking everything up
 
         createWeeklyForecast(forecast);
         changeBackground(today);
@@ -41,11 +38,9 @@ const customizeWeatherRequest = async(forecast, searchQuery) => {
 // take the array of the next 7 days and convert them to an Object and store in array
 const populateForecast = async(weather) => {
     var weatherArray = [];
-    console.log("populate weather", weather);
 
     weather.days.forEach((day) => {
-        console.log("The day, ", day);
-        const dayObj = createDay(day.feelslike, day.humidity, day.precipprob, day.uvindex, day.windspeed, day.datetimeEpoch, day.icon, day.hours, day.tempmax, day.tempmin);
+        const dayObj = createDay(day.feelslike, day.humidity, day.precipprob, day.uvindex, day.windspeed, day.datetime, day.icon, day.hours, day.tempmax, day.tempmin);
         weatherArray.push(dayObj);
     });
     

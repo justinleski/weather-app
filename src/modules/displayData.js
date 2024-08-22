@@ -1,5 +1,6 @@
 import { changeWeather, updateElement, updateHourlyForecast, updateWeeklyForecast, clearContent } from "./domManipulator";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
+import  moment  from 'moment-timezone';
 
 export const displayMainInfo = (currLoc, currDesc, today) => {
     const location = document.querySelector("#currLoc");
@@ -13,9 +14,6 @@ export const displayMainInfo = (currLoc, currDesc, today) => {
     changeWeather(temp, today.hourlyForecast[currHour].feelslike);
     updateElement(location, currLoc);
     updateElement(desc, currDesc);
-
-    // Add our classes here? Maybe add base styling such as font in DOMman, then add bolding etc in this file
-    console.log("test we hacve it ");
 }
 
 export const displayTodayExtra = (today) => {
@@ -30,7 +28,7 @@ export const displayTodayExtra = (today) => {
     updateElement(rain, today.precip + ("%"));
 }
 
-export const createHourlyForecast = (today, tomorrow) => {
+export const createHourlyForecast = (today, tomorrow, timezone) => {
 
     const hourly = document.querySelector("#hourlyForecast");
     clearContent(hourly);
@@ -38,16 +36,19 @@ export const createHourlyForecast = (today, tomorrow) => {
     var days = today.hourlyForecast.concat(tomorrow.hourlyForecast);
 
     // time
-    const currHour = getCurrentHour();
+    var currTime = moment.tz(timezone);
+    var currHour = parseInt(currTime.format("H"));
 
     // TODO: IF currHour was say 22; and we went +5 this would cause issues - fix
-    console.error("Fix; currHour is correct, however datetime not being formatted");
     for (var i = currHour; i < (currHour+5); i++) {
+
         const card = document.createElement("div");
         card.classList.add("hourlyForecastCard");
 
-        // parse time using date-fns
-        const date = format(new Date(days[i].datetimeEpoch*1000), 'h a'); // since datetimeepoch everything resolved to same day, change so it prints actual correct day
+        // const date = format(new Date(days[i].datetime), 'h a'); // since datetimeepoch everything resolved to same day, change so it prints actual correct day
+        const parseTime = parse(days[i].datetime, "HH:mm:ss", new Date());
+        const date = format(parseTime, "h a");
+
         const time = document.createElement("p");
         time.textContent = date;
 
@@ -87,12 +88,12 @@ export const createWeeklyForecast = (forecast) => {
         const iconName = day.icon;
         const icon = document.createElement("img");
         icon.src = `../../assets/icons/${iconName}.svg`;
-        console.error("Display rain chance if forecast rpedicts");
+
         icon.classList.add("weatherIcon");
         icons.appendChild(icon);
 
         // parse date
-        const date = format(new Date(day.time*1000), 'EEEE'); // since datetimeepoch everything resolved to same day, change so it prints actual correct day
+        const date = format(new Date(day.time), 'EEEE'); 
         const dateFormatted = document.createElement("p");
         dateFormatted.textContent = date;
 
