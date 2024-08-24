@@ -2,6 +2,16 @@ import { changeWeather, updateElement, updateHourlyForecast, updateWeeklyForecas
 import { format, parse } from "date-fns";
 import  moment  from 'moment-timezone';
 
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+}
+  
+const weatherImages = importAll(require.context('../../assets/images', false, /\.(png|jpe?g|svg)$/));
+const weatherIcons = importAll(require.context('../../assets/icons', false, /\.(png|jpe?g|svg)$/));
+  
+
 export const displayMainInfo = (currLoc, currDesc, today) => {
     const location = document.querySelector("#currLoc");
     const temp = document.querySelector("#currTemp");
@@ -39,13 +49,12 @@ export const createHourlyForecast = (today, tomorrow, timezone) => {
     var currTime = moment.tz(timezone);
     var currHour = parseInt(currTime.format("H"));
 
-    // TODO: IF currHour was say 22; and we went +5 this would cause issues - fix
+    // Display next five hours based on countries timezone's current time
     for (var i = currHour; i < (currHour+5); i++) {
 
         const card = document.createElement("div");
         card.classList.add("hourlyForecastCard");
 
-        // const date = format(new Date(days[i].datetime), 'h a'); // since datetimeepoch everything resolved to same day, change so it prints actual correct day
         const parseTime = parse(days[i].datetime, "HH:mm:ss", new Date());
         const date = format(parseTime, "h a");
 
@@ -56,11 +65,9 @@ export const createHourlyForecast = (today, tomorrow, timezone) => {
         const iconCard = document.createElement("div");
         const iconName = days[i].icon;
         const icon = document.createElement("img");
-        icon.src = `../../assets/icons/${iconName}.svg`;
+        //icon.src = `${iconName}.svg`;
+        icon.src = weatherIcons[iconName.concat(".svg")];
         iconCard.appendChild(icon);
-        // if (iconName == "rain") {
-        //     showRainChance(iconCard, days[i].precipprob);
-        // }
 
         const temp = document.createElement("p");
         changeWeather(temp, days[i].feelslike);
@@ -87,7 +94,7 @@ export const createWeeklyForecast = (forecast) => {
         //card
         const iconName = day.icon;
         const icon = document.createElement("img");
-        icon.src = `../../assets/icons/${iconName}.svg`;
+        icon.src = weatherIcons[iconName.concat(".svg")];
 
         icon.classList.add("weatherIcon");
         icons.appendChild(icon);
@@ -144,29 +151,11 @@ export const changeBackground = (today) => {
     const currHour = getCurrentHour();
     const bgName = today.hourlyForecast[currHour].icon;
 
-    // If the main text is not too readable on bg, change colour
-    // const currentWeatherCard = document.querySelector(".currentWeather > *");
-    // currentWeatherCard
-
-    // switch (bgName) {
-    //     case "partly-cloudy-night":
-    //     case "clear-night":
-    //         changeTextWhite(currentWeatherCard);
-    //         break;
-    //     default:
-    //         currentWeatherCard.classList.remove("whiteShadow");
-    //         break;
-    // }
-
-    body.style.backgroundImage = `url(../../assets/images/${bgName}.jpg)`;
+    console.log("bing chilling name ", bgName.concat(".jpg"));
+    const filePath = weatherImages[bgName.concat(".jpg")];
+    body.style.backgroundImage = `url(${filePath})`;
     body.style.backgroundPosition = "center";
 }
-
-// const changeTextWhite = (parentElement) => {
-//     parentElement.forEach(child => {
-//         child.classList.add("whiteShadow")
-//     });
-// }
 
 const getCurrentHour = () => {
     const now = new Date();
