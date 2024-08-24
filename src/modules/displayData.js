@@ -8,8 +8,8 @@ function importAll(r) {
     return images;
 }
   
-const weatherImages = importAll(require.context('../../assets/images', false, /\.(png|jpe?g|svg)$/));
-const weatherIcons = importAll(require.context('../../assets/icons', false, /\.(png|jpe?g|svg)$/));
+const weatherImages = importAll(require.context('/assets/images', false, /\.(png|jpe?g|svg)$/));
+const weatherIcons = importAll(require.context('/assets/icons', false, /\.(png|jpe?g|svg)$/));
   
 
 export const displayMainInfo = (currLoc, currDesc, today) => {
