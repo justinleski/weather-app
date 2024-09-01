@@ -2,14 +2,24 @@ import { changeWeather, updateElement, updateHourlyForecast, updateWeeklyForecas
 import { format, parse } from "date-fns";
 import  moment  from 'moment-timezone';
 
-function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-    return images;
-}
+// function importAll(r) {
+//     let images = {};
+//     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+//     return images;
+// }
   
-const weatherImages = importAll(require.context('/assets/images', false, /\.(png|jpe?g|svg)$/));
-const weatherIcons = importAll(require.context('/assets/icons', false, /\.(png|jpe?g|svg)$/));
+// const weatherImages = importAll(require.context('/assets/images', false, /\.(png|jpe?g|svg)$/));
+// const weatherIcons = importAll(require.context('/assets/icons', false, /\.(png|jpe?g|svg)$/));
+
+// var weatherIcons = [];
+// import("../../assets/icons").then((icon) => {
+//     weatherIcons.push(icon);
+// });
+
+// var weatherImages = [];
+// import("../../assets/images/*.svg").then((image) => {
+//     weatherImages.push(image);
+// });
   
 
 export const displayMainInfo = (currLoc, currDesc, today) => {
@@ -38,7 +48,7 @@ export const displayTodayExtra = (today) => {
     updateElement(rain, today.precip + ("%"));
 }
 
-export const createHourlyForecast = (today, tomorrow, timezone) => {
+export const createHourlyForecast = async(today, tomorrow, timezone) => {
 
     const hourly = document.querySelector("#hourlyForecast");
     clearContent(hourly);
@@ -66,7 +76,10 @@ export const createHourlyForecast = (today, tomorrow, timezone) => {
         const iconName = days[i].icon;
         const icon = document.createElement("img");
         //icon.src = `${iconName}.svg`;
-        icon.src = weatherIcons[iconName.concat(".svg")];
+        //icon.src = weatherIcons[iconName.concat(".svg")];
+        const iconSrc = await import(`../../assets/icons/${iconName}.svg`);
+        console.log("icon src ", typeof iconSrc);
+        icon.src = iconSrc;
         iconCard.appendChild(icon);
 
         const temp = document.createElement("p");
@@ -94,7 +107,8 @@ export const createWeeklyForecast = (forecast) => {
         //card
         const iconName = day.icon;
         const icon = document.createElement("img");
-        icon.src = weatherIcons[iconName.concat(".svg")];
+        //icon.src = weatherIcons[iconName.concat(".svg")];
+        import(`../../assets/icons/${iconName}.svg`);
 
         icon.classList.add("weatherIcon");
         icons.appendChild(icon);
@@ -151,8 +165,8 @@ export const changeBackground = (today) => {
     const currHour = getCurrentHour();
     const bgName = today.hourlyForecast[currHour].icon;
 
-    console.log("bing chilling name ", bgName.concat(".jpg"));
-    const filePath = weatherImages[bgName.concat(".jpg")];
+    // const filePath = weatherImages[bgName.concat(".jpg")];
+    const filePath = import(`../../assets/images/${bgName}.jpg`);
     body.style.backgroundImage = `url(${filePath})`;
     body.style.backgroundPosition = "center";
 }
